@@ -1,5 +1,7 @@
 package guitest;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,21 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author guan97005
- */
 public class JFrame extends javax.swing.JFrame {
-
-    /**
-     * Creates new form dawpl
-     */
     public JFrame() {
         
         initComponents();
@@ -35,7 +23,7 @@ public class JFrame extends javax.swing.JFrame {
     
     public static String sortQuery = "SELECT * FROM filmer";
     
-    //Metod som ansluter till databasen
+    //Ansluter till databasen
     public java.sql.Connection getConnection() {
         java.sql.Connection con;
         try {
@@ -64,7 +52,7 @@ public class JFrame extends javax.swing.JFrame {
     
     
     
-    //Arraylist där filmerna lagras
+    //Filmerna blir arraylists
     public ArrayList listFilmer() {
         ArrayList<Filmer> list = new ArrayList<Filmer>();
         Connection connection = getConnection();
@@ -81,7 +69,7 @@ public class JFrame extends javax.swing.JFrame {
                 list.add(film);
             }
         } catch (SQLException ex) {
-            System.out.println("Gör om, gör rätt");
+            System.out.println("Fel i arraylistan");
         }
         return list;
     }
@@ -140,13 +128,15 @@ public class JFrame extends javax.swing.JFrame {
         headerDirector = new javax.swing.JLabel();
         headerIMDb = new javax.swing.JLabel();
         headerLength = new javax.swing.JLabel();
+        author = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
+        emptyFieldsButton = new javax.swing.JButton();
+        backgroundLabel = new javax.swing.JLabel();
         getID = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1340, 720));
+        setPreferredSize(new java.awt.Dimension(1340, 716));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -154,42 +144,44 @@ public class JFrame extends javax.swing.JFrame {
         jPanel1.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setText("Movie Database");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(580, 20, 240, 65);
+        jLabel1.setBounds(560, 20, 240, 65);
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(239, 239, 239));
         jLabel2.setText("Genre");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(130, 250, 50, 26);
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(239, 239, 239));
         jLabel3.setText("Title");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(140, 150, 40, 40);
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setForeground(new java.awt.Color(239, 239, 239));
         jLabel5.setText("Director");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(130, 340, 60, 26);
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(239, 239, 239));
         jLabel4.setText("IMDb");
         jPanel1.add(jLabel4);
         jLabel4.setBounds(140, 430, 40, 26);
 
         jLabel6.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(239, 239, 239));
         jLabel6.setText("Length");
         jPanel1.add(jLabel6);
         jLabel6.setBounds(130, 520, 50, 26);
 
+        newTitle.setBackground(new java.awt.Color(153, 153, 153));
+        newTitle.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         newTitle.setSelectionColor(new java.awt.Color(0, 0, 0));
         newTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,6 +191,8 @@ public class JFrame extends javax.swing.JFrame {
         jPanel1.add(newTitle);
         newTitle.setBounds(80, 200, 161, 30);
 
+        newGenre.setBackground(new java.awt.Color(153, 153, 153));
+        newGenre.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         newGenre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newGenreActionPerformed(evt);
@@ -207,6 +201,8 @@ public class JFrame extends javax.swing.JFrame {
         jPanel1.add(newGenre);
         newGenre.setBounds(80, 290, 161, 30);
 
+        newDirector.setBackground(new java.awt.Color(153, 153, 153));
+        newDirector.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         newDirector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newDirectorActionPerformed(evt);
@@ -215,6 +211,8 @@ public class JFrame extends javax.swing.JFrame {
         jPanel1.add(newDirector);
         newDirector.setBounds(80, 380, 161, 30);
 
+        newIMDb.setBackground(new java.awt.Color(153, 153, 153));
+        newIMDb.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         newIMDb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newIMDbActionPerformed(evt);
@@ -223,6 +221,8 @@ public class JFrame extends javax.swing.JFrame {
         jPanel1.add(newIMDb);
         newIMDb.setBounds(80, 470, 161, 30);
 
+        newLength.setBackground(new java.awt.Color(153, 153, 153));
+        newLength.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         newLength.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newLengthActionPerformed(evt);
@@ -240,13 +240,18 @@ public class JFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(addButton);
-        addButton.setBounds(110, 640, 103, 29);
+        addButton.setBounds(90, 610, 90, 29);
 
         updateButton.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 18)); // NOI18N
         updateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/guitest/rotate1.png"))); // NOI18N
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(updateButton);
-        updateButton.setBounds(720, 650, 103, 29);
+        updateButton.setBounds(600, 650, 103, 29);
 
         removeButton.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 18)); // NOI18N
         removeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/guitest/remove1.png"))); // NOI18N
@@ -257,66 +262,88 @@ public class JFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(removeButton);
-        removeButton.setBounds(1050, 650, 103, 29);
+        removeButton.setBounds(910, 650, 103, 29);
 
         headerTitle.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        headerTitle.setForeground(new java.awt.Color(255, 255, 255));
+        headerTitle.setForeground(new java.awt.Color(239, 239, 239));
         headerTitle.setText("Title");
         headerTitle.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 headerTitleMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                headerTitleMouseEntered(evt);
+            }
         });
         jPanel1.add(headerTitle);
-        headerTitle.setBounds(420, 110, 40, 26);
+        headerTitle.setBounds(440, 110, 40, 30);
 
         headerGenre.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        headerGenre.setForeground(new java.awt.Color(255, 255, 255));
+        headerGenre.setForeground(new java.awt.Color(239, 239, 239));
         headerGenre.setText("Genre");
         headerGenre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 headerGenreMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                headerGenreMouseEntered(evt);
             }
         });
         jPanel1.add(headerGenre);
         headerGenre.setBounds(650, 110, 50, 30);
 
         headerDirector.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        headerDirector.setForeground(new java.awt.Color(255, 255, 255));
+        headerDirector.setForeground(new java.awt.Color(239, 239, 239));
         headerDirector.setText("Director");
         headerDirector.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 headerDirectorMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                headerDirectorMouseEntered(evt);
             }
         });
         jPanel1.add(headerDirector);
         headerDirector.setBounds(870, 110, 60, 26);
 
         headerIMDb.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        headerIMDb.setForeground(new java.awt.Color(255, 255, 255));
+        headerIMDb.setForeground(new java.awt.Color(239, 239, 239));
         headerIMDb.setText("IMDb");
         headerIMDb.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 headerIMDbMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                headerIMDbMouseEntered(evt);
+            }
         });
         jPanel1.add(headerIMDb);
-        headerIMDb.setBounds(1050, 110, 40, 26);
+        headerIMDb.setBounds(1060, 110, 40, 26);
 
         headerLength.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        headerLength.setForeground(new java.awt.Color(255, 255, 255));
+        headerLength.setForeground(new java.awt.Color(239, 239, 239));
         headerLength.setText("Length");
         headerLength.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 headerLengthMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                headerLengthMouseEntered(evt);
+            }
         });
         jPanel1.add(headerLength);
         headerLength.setBounds(1170, 110, 50, 26);
 
+        author.setBackground(new java.awt.Color(0, 0, 0));
+        author.setFont(new java.awt.Font("Lucida Handwriting", 0, 12)); // NOI18N
+        author.setForeground(new java.awt.Color(255, 255, 255));
+        author.setText("Made By Gustav Andersson ©");
+        jPanel1.add(author);
+        author.setBounds(1130, 670, 200, 20);
+
         jTable1.setBackground(new java.awt.Color(51, 51, 51));
         jTable1.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setForeground(new java.awt.Color(239, 239, 239));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -360,12 +387,22 @@ public class JFrame extends javax.swing.JFrame {
         }
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(320, 160, 970, 470);
+        jScrollPane1.setBounds(320, 160, 970, 480);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/guitest/rsz_1registerbackground.png"))); // NOI18N
-        jLabel7.setText("jLabel7");
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(0, 0, 1360, 690);
+        emptyFieldsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/guitest/remove1.png"))); // NOI18N
+        emptyFieldsButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                emptyFieldsButtonMouseClicked(evt);
+            }
+        });
+        jPanel1.add(emptyFieldsButton);
+        emptyFieldsButton.setBounds(200, 610, 30, 29);
+
+        backgroundLabel.setForeground(new java.awt.Color(255, 255, 255));
+        backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/guitest/rsz_1registerbackground.png"))); // NOI18N
+        backgroundLabel.setText("jLabel7");
+        jPanel1.add(backgroundLabel);
+        backgroundLabel.setBounds(0, 0, 1360, 690);
 
         getID.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(getID);
@@ -397,6 +434,7 @@ public class JFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_newTitleActionPerformed
 
+    //när man trycker på "add" läggs vald film till i databasen
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
 
         try {
@@ -409,10 +447,11 @@ public class JFrame extends javax.swing.JFrame {
             
  
         } catch (SQLException ex) {
-            System.out.println("Gör om, gör rätt");
+            System.out.println("Fel när film ska läggas till");
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
+    //när man trycker på "remove" raderas vald film från databasen
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
 
         try {
@@ -423,7 +462,7 @@ public class JFrame extends javax.swing.JFrame {
             refresh();
  
         } catch (SQLException ex) {
-            System.out.println("Gör om, gör rätt");
+            System.out.println("Fel vid borttagning av film");
         }
     }//GEN-LAST:event_removeButtonActionPerformed
 
@@ -433,13 +472,14 @@ public class JFrame extends javax.swing.JFrame {
         int i = jTable1.getSelectedRow();
         TableModel model = jTable1.getModel();
         getID.setText(model.getValueAt(i, 0).toString());
+        newTitle.setText(model.getValueAt(i, 1).toString());
+        newGenre.setText(model.getValueAt(i, 2).toString());
+        newDirector.setText(model.getValueAt(i, 3).toString());
+        newIMDb.setText(model.getValueAt(i, 4).toString());
+        newLength.setText(model.getValueAt(i, 5).toString()); 
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void headerTitleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerTitleMouseClicked
-        sortQuery = "SELECT * FROM filmer order BY Titel";
-        refresh();
-    }//GEN-LAST:event_headerTitleMouseClicked
-
+    //Följande funktioner gör så tabellen sorteras
     private void headerGenreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerGenreMouseClicked
         sortQuery = "SELECT * FROM filmer order BY Genre";
         refresh();
@@ -459,7 +499,53 @@ public class JFrame extends javax.swing.JFrame {
         sortQuery = "SELECT * FROM filmer order by Längd desc";
         refresh();
     }//GEN-LAST:event_headerLengthMouseClicked
-            
+
+    //När man trycker på "update" uppdateras vald film i databasen
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        try {
+            Connection connection = getConnection();
+            Statement stmt = connection.createStatement();
+            String sql = "UPDATE `filmer` SET `Titel` = '" + newTitle.getText() + "', `Genre` = '" + newGenre.getText() + "', `Regissör` = '" + newDirector.getText() + "', `IMDb` = '" + newIMDb.getText() + "', `Längd` = '" + newLength.getText() + "' WHERE `id` = " + getID.getText()  ;
+            stmt.executeUpdate(sql);
+            refresh();
+            emptyFields();
+ 
+        } catch (SQLException ex) {
+            System.out.println("Fel vid uppdatering");
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    //Knapp som tar bort all text från inmatningsfälten
+    private void emptyFieldsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_emptyFieldsButtonMouseClicked
+        emptyFields();
+    }//GEN-LAST:event_emptyFieldsButtonMouseClicked
+
+    private void headerTitleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerTitleMouseClicked
+        sortQuery = "SELECT * FROM filmer order BY Titel";
+        refresh();
+    }//GEN-LAST:event_headerTitleMouseClicked
+
+    //Följande gör så att användaren kan se att sorteringsknapparna är klickbara
+    private void headerTitleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerTitleMouseEntered
+        headerTitle.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_headerTitleMouseEntered
+
+    private void headerGenreMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerGenreMouseEntered
+        headerGenre.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_headerGenreMouseEntered
+
+    private void headerDirectorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerDirectorMouseEntered
+        headerDirector.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_headerDirectorMouseEntered
+
+    private void headerIMDbMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerIMDbMouseEntered
+        headerIMDb.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_headerIMDbMouseEntered
+
+    private void headerLengthMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerLengthMouseEntered
+        headerLength.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_headerLengthMouseEntered
+    
     /**
      * @param args the command line arguments
      */
@@ -498,6 +584,9 @@ public class JFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JLabel author;
+    private javax.swing.JLabel backgroundLabel;
+    private javax.swing.JButton emptyFieldsButton;
     private javax.swing.JLabel getID;
     private javax.swing.JLabel headerDirector;
     private javax.swing.JLabel headerGenre;
@@ -510,7 +599,6 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
