@@ -1,6 +1,5 @@
 package guitest;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -22,18 +20,6 @@ public class JFrame extends javax.swing.JFrame {
     }
     
     public static String sortQuery = "SELECT * FROM filmer";
-    
-    //Ansluter till databasen
-    public java.sql.Connection getConnection() {
-        java.sql.Connection con;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost/filmregister", "root", "");
-            return con;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     
     //Göm kolumnen med ID
     public void hideColumnId(){
@@ -55,7 +41,7 @@ public class JFrame extends javax.swing.JFrame {
     //Filmerna blir arraylists
     public ArrayList listFilmer() {
         ArrayList<Filmer> list = new ArrayList<Filmer>();
-        Connection connection = getConnection();
+        Connection connection = connectDB.getConnection();
         Statement st;
         ResultSet rs;
         
@@ -438,7 +424,7 @@ public class JFrame extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
 
         try {
-            Connection connection = getConnection();
+            Connection connection = connectDB.getConnection();
             Statement stmt = connection.createStatement();
             String sql = "INSERT INTO `filmer` (`Titel`, `Genre`, `Regissör`, `IMDb`, `Längd`) VALUES ('" + newTitle.getText() + "','" + newGenre.getText() + "','" + newDirector.getText() + "','" + newIMDb.getText()+ "','" + newLength.getText() + "')";
             stmt.executeUpdate(sql);
@@ -455,7 +441,7 @@ public class JFrame extends javax.swing.JFrame {
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
 
         try {
-            Connection connection = getConnection();
+            Connection connection = connectDB.getConnection();
             Statement stmt = connection.createStatement();
             String sql = "DELETE FROM `filmer` WHERE `filmer`.`id` = "+getID.getText();
             stmt.executeUpdate(sql);
@@ -503,7 +489,7 @@ public class JFrame extends javax.swing.JFrame {
     //När man trycker på "update" uppdateras vald film i databasen
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         try {
-            Connection connection = getConnection();
+            Connection connection = connectDB.getConnection();
             Statement stmt = connection.createStatement();
             String sql = "UPDATE `filmer` SET `Titel` = '" + newTitle.getText() + "', `Genre` = '" + newGenre.getText() + "', `Regissör` = '" + newDirector.getText() + "', `IMDb` = '" + newIMDb.getText() + "', `Längd` = '" + newLength.getText() + "' WHERE `id` = " + getID.getText()  ;
             stmt.executeUpdate(sql);
