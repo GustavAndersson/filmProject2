@@ -2,7 +2,6 @@ package guitest;
 
 import java.awt.Cursor;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,7 +13,7 @@ public class JFrame extends javax.swing.JFrame {
     public JFrame() {
         
         initComponents();
-        addRowToJTable();
+        addFilmsToJTable();
         hideColumnId();
         jScrollPane1.getColumnHeader().setVisible(false);
     }
@@ -39,9 +38,9 @@ public class JFrame extends javax.swing.JFrame {
     
     
     //Filmerna blir arraylists
-    public ArrayList listFilmer() {
+    public ArrayList filmList() {
         ArrayList<Filmer> list = new ArrayList<Filmer>();
-        Connection connection = connectDB.getConnection();
+        Connection connection = ConnectDB.getConnection();
         Statement st;
         ResultSet rs;
         
@@ -51,7 +50,7 @@ public class JFrame extends javax.swing.JFrame {
             Filmer film;
             
             while (rs.next()) {
-                film = new Filmer(rs.getInt("id"), rs.getString("titel"), rs.getString("genre"), rs.getString("regissör"), rs.getString("iMDb"), rs.getString("längd"));
+                film = new Filmer(rs.getInt("id"), rs.getString("titel"), rs.getString("genre"), rs.getString("regissör"), rs.getDouble("iMDb"), rs.getString("längd"));
                 list.add(film);
             }
         } catch (SQLException ex) {
@@ -60,9 +59,9 @@ public class JFrame extends javax.swing.JFrame {
         return list;
     }
     
-    //Filmerna läggs till i JTabeln
-    public void addRowToJTable() {
-        ArrayList<Filmer> list = listFilmer();
+    //Skriver ut filmerna i JTabeln
+    public void addFilmsToJTable() {
+        ArrayList<Filmer> list = filmList();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         Object []rowData = new Object[6];
         for (int i = 0; i < list.size(); i++) {
@@ -81,7 +80,7 @@ public class JFrame extends javax.swing.JFrame {
     public void refresh(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        addRowToJTable();        
+        addFilmsToJTable();        
         
     }
 
@@ -424,7 +423,7 @@ public class JFrame extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
 
         try {
-            Connection connection = connectDB.getConnection();
+            Connection connection = ConnectDB.getConnection();
             Statement stmt = connection.createStatement();
             String sql = "INSERT INTO `filmer` (`Titel`, `Genre`, `Regissör`, `IMDb`, `Längd`) VALUES ('" + newTitle.getText() + "','" + newGenre.getText() + "','" + newDirector.getText() + "','" + newIMDb.getText()+ "','" + newLength.getText() + "')";
             stmt.executeUpdate(sql);
@@ -441,7 +440,7 @@ public class JFrame extends javax.swing.JFrame {
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
 
         try {
-            Connection connection = connectDB.getConnection();
+            Connection connection = ConnectDB.getConnection();
             Statement stmt = connection.createStatement();
             String sql = "DELETE FROM `filmer` WHERE `filmer`.`id` = "+getID.getText();
             stmt.executeUpdate(sql);
@@ -489,7 +488,7 @@ public class JFrame extends javax.swing.JFrame {
     //När man trycker på "update" uppdateras vald film i databasen
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         try {
-            Connection connection = connectDB.getConnection();
+            Connection connection = ConnectDB.getConnection();
             Statement stmt = connection.createStatement();
             String sql = "UPDATE `filmer` SET `Titel` = '" + newTitle.getText() + "', `Genre` = '" + newGenre.getText() + "', `Regissör` = '" + newDirector.getText() + "', `IMDb` = '" + newIMDb.getText() + "', `Längd` = '" + newLength.getText() + "' WHERE `id` = " + getID.getText()  ;
             stmt.executeUpdate(sql);

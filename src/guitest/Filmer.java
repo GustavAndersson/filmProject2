@@ -11,10 +11,10 @@ public class Filmer {
         private String titel;
         private String genre;
         private String regissör;
-        private String iMDb;
+        private double iMDb;
         private String längd;
 
-        public Filmer(int Id, String Titel, String Genre, String Regissör, String IMDb, String Längd) {
+        public Filmer(int Id, String Titel, String Genre, String Regissör, double IMDb, String Längd) {
             this.id = Id;
             this.titel = Titel;
             this.genre = Genre;
@@ -39,7 +39,7 @@ public class Filmer {
             return this.regissör;
         }
 
-        public String getIMDb() {
+        public double getIMDb() {
             return this.iMDb;
         }
 
